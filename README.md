@@ -32,16 +32,8 @@ The app consumes backend APIs to display available villas and generate pricing q
 
 ## 📁 Project Structure
 
-lib/
-├── main.dart
-├── models/
-│ ├── villa.dart
-│ └── villa_quote.dart
-├── services/
-│ └── villa_api_service.dart
-├── screens/
-│ ├── villa_list_screen.dart
-│ └── villa_quote_screen.dart
+<img width="364" height="278" alt="image" src="https://github.com/user-attachments/assets/242b86b3-659e-4e6e-a4ea-f49fb32c986b" />
+
 
 ---
 
