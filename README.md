@@ -44,15 +44,10 @@ The app consumes backend APIs to display available villas and generate pricing q
 - Backend server running locally on port `5000`
 
 Verify Flutter:
-```bash
 flutter doctor
 2️⃣ Install dependencies
-bash
-Copy code
 flutter pub get
 3️⃣ Run the app
-bash
-Copy code
 flutter run
 When prompted, select:
 
@@ -67,3 +62,11 @@ Endpoints used:
 GET /v1/villas/availability
 
 GET /v1/villas/:villa_id/quote
+
+📌 Notes
+
+API dates are currently hardcoded for assignment scope.
+
+Architecture separates models, services, and UI layers for clarity.
+
+The app can be easily extended to Android/iOS with minimal changes.
