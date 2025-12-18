@@ -14,8 +14,10 @@ class LohonoApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Lohono Villas',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+  primarySwatch: Colors.teal,
+  scaffoldBackgroundColor: Colors.grey[50],
+),
+
       home: const VillaListScreen(),
     );
   }

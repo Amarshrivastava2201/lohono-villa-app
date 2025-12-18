@@ -33,18 +33,19 @@ class VillaQuoteScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Nights: ${quote.nights}'),
-                const SizedBox(height: 8),
-                Text('Subtotal: ₹${quote.subtotal}'),
-                Text('GST (18%): ₹${quote.gst}'),
-                const Divider(),
-                Text(
-                  'Total: ₹${quote.total}',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const Text(
+                  'Price Summary',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 16),
+
+                _priceRow('Nights', '${quote.nights}'),
+                _priceRow('Subtotal', '₹${quote.subtotal}'),
+                _priceRow('GST (18%)', '₹${quote.gst}'),
+
+                const Divider(height: 32),
+
+                _priceRow('Total', '₹${quote.total}', isBold: true),
               ],
             ),
           );
@@ -52,4 +53,22 @@ class VillaQuoteScreen extends StatelessWidget {
       ),
     );
   }
+  Widget _priceRow(String label, String value, {bool isBold = false}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 }
