@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lohono_villa_app/widgets/villa_card_skeleton.dart';
 
 import '../models/villa.dart';
 
@@ -135,12 +136,9 @@ class _VillaListScreenState extends State<VillaListScreen> {
                 // =========================
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return ListView.builder(
-                    itemCount: 4,
-                    itemBuilder: (_, _) => Container(
-                      margin: const EdgeInsets.all(16),
-                      height: 120,
-                      color: Colors.grey[200],
-                    ),
+                    padding: const EdgeInsets.all(16),
+                    itemCount: 5,
+                    itemBuilder: (_, __) => const VillaCardSkeleton(),
                   );
                 }
 
