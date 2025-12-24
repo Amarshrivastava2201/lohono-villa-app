@@ -2,38 +2,69 @@ import 'package:flutter/material.dart';
 import '../models/villa_quote.dart';
 import '../services/villa_api_service.dart';
 
-class VillaQuoteScreen extends StatelessWidget {
+class VillaQuoteScreen extends StatefulWidget {
   final String villaId;
+  final DateTime checkIn;
+  final DateTime checkOut;
 
-  const VillaQuoteScreen({super.key, required this.villaId});
+  const VillaQuoteScreen({
+    super.key,
+    required this.villaId,
+    required this.checkIn,
+    required this.checkOut,
+  });
+
+  @override
+  State<VillaQuoteScreen> createState() => _VillaQuoteScreenState();
+}
+
+class _VillaQuoteScreenState extends State<VillaQuoteScreen> {
+  late Future<VillaQuote> _future;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _future = VillaApiService.fetchVillaQuote(
+      villaId: widget.villaId,
+      checkIn: widget.checkIn,
+      checkOut: widget.checkOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Villa Quote')),
-      body: FutureBuilder<VillaQuote>(
-        future: VillaApiService.fetchVillaQuote(villaId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      appBar: AppBar(title: const Text('Quote')),
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder<VillaQuote>(
+              future: _future,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-          if (snapshot.hasError) {
-            return const Center(child: Text('Failed to load quote'));
-          }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
 
-          final quote = snapshot.data!;
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const Center(child: Text('No quote data available'));
+                }
 
-          if (!quote.isAvailable) {
-            return const Center(child: Text('Villa not available'));
-          }
+                final quote = snapshot.data!;
 
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
+                if (!quote.isAvailable) {
+                  return const Center(
+                    child: Text('Villa not available for selected dates'),
+                  );
+                }
+
+                return ListView(
+                  padding: const EdgeInsets.all(16),
+                  children: [const Text(
                   'Price Summary',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -47,9 +78,11 @@ class VillaQuoteScreen extends StatelessWidget {
 
                 _priceRow('Total', '₹${quote.total}', isBold: true),
               ],
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
@@ -70,5 +103,4 @@ class VillaQuoteScreen extends StatelessWidget {
     ),
   );
 }
-
 }
