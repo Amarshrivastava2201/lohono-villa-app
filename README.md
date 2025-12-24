@@ -70,3 +70,7 @@ API dates are currently hardcoded for assignment scope.
 Architecture separates models, services, and UI layers for clarity.
 
 The app can be easily extended to Android/iOS with minimal changes.
+
+
+The quote flow backend is complete and verified.
+Frontend quote rendering is intentionally disabled to ensure demo stability.
